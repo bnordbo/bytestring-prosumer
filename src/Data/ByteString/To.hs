@@ -28,6 +28,9 @@ instance ToByteString Bool where
     toByteString True  = "True"
     toByteString False = "False"
 
+instance ToByteString Integer where
+    toByteString = buildByteString . B.integerDec
+
 instance ToByteString Int8 where
     toByteString = buildByteString . B.int8Dec
 
@@ -42,9 +45,6 @@ instance ToByteString Int64 where
 
 instance ToByteString Int where
     toByteString = buildByteString . B.intDec
-
-instance ToByteString Integer where
-    toByteString = buildByteString . B.integerDec
 
 instance ToByteString Word8 where
     toByteString = buildByteString . B.word8Dec

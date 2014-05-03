@@ -13,6 +13,7 @@ import           Data.Int
 import           Data.Text                               (Text)
 import           Data.Text.Encoding                      (decodeUtf8)
 import           Data.Word
+import           GHC.Float                               (double2Float)
 import           Prelude                          hiding (takeWhile)
 
 class FromByteString a where
@@ -36,6 +37,14 @@ instance FromByteString String where
 
 instance FromByteString Text where
     parser = decodeUtf8 <$> takeByteString
+
+instance FromByteString Bool where
+    parser = choice [ "True"  .*> return True
+                    , "False" .*> return False
+                    ]
+
+instance FromByteString Integer where
+    parser = signed decimal <|> fail "Invalid Integer"
 
 instance FromByteString Int where
     parser = signed decimal <|> fail "Invalid Int"
@@ -66,3 +75,9 @@ instance FromByteString Word32 where
 
 instance FromByteString Word64 where
     parser = decimal <|> fail "Invalid Word64"
+
+instance FromByteString Float where
+    parser = double2Float <$> signed double <|> fail "Invalid Float"
+
+instance FromByteString Double where
+    parser = signed double <|> fail "Invalid Double"

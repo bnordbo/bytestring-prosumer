@@ -22,6 +22,10 @@ tests = testGroup "Bijective"
           fromByteString (toByteString x) == Just (x :: String)
     , testProperty "Text" $ \x ->
           fromByteString (toByteString x) == Just (x :: Text)
+    , testProperty "Bool" $ \x ->
+          fromByteString (toByteString x) == Just (x :: Bool)
+    , testProperty "Integer" $ \x ->
+          fromByteString (toByteString x) == Just (x :: Integer)
     , testProperty "Int" $ \x ->
           fromByteString (toByteString x) == Just (x :: Int)
     , testProperty "Int8" $ \x ->
@@ -42,6 +46,10 @@ tests = testGroup "Bijective"
           fromByteString (toByteString x) == Just (x :: Word32)
     , testProperty "Word64" $ \x ->
           fromByteString (toByteString x) == Just (x :: Word64)
+    , testProperty "Float" $ \x ->
+          fromByteString (toByteString x) == Just (x :: Float)
+    , testProperty "Double" $ \x ->
+          fromByteString (toByteString x) == Just (x :: Double)
     ]
 
 instance Arbitrary ByteString where
