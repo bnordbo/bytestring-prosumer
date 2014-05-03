@@ -30,6 +30,8 @@ test-suite bytestring-bi-unit
     hs-source-dirs:      test
 
     build-depends:       base             == 4.*
+                       , bytestring       == 0.10.4.*
                        , bytestring-bi
                        , tasty            == 0.8.*
                        , tasty-quickcheck == 0.8.*
+                       , text
