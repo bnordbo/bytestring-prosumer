@@ -76,9 +76,10 @@ instance IsString a => Arbitrary (UTF8 a) where
     arbitrary = UTF8 . fromString . map chr <$> listOf utf8
       where
         utf8 = oneof
-            [ choose (     0,   36095 )
-            , choose ( 57344,   65533 )
-            , choose ( 65536, 1114111 )
+            [ choose (     0,     191 )
+            , choose (   194,     244 )
+            , choose (   256,   55295 )
+            , choose ( 57343, 1114111 )
             ]
 
 newtype BoolStr = BoolStr ByteString

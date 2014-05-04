@@ -12,7 +12,7 @@ import Data.ByteString.Char8            (empty, unpack)
 import Data.Int
 import Data.Maybe                       (isJust)
 import Data.Text                        (Text)
-import Data.Text.Encoding               (decodeUtf8)
+import Data.Text.Encoding               (decodeUtf8')
 import Data.Word
 import GHC.Float                        (double2Float)
 
@@ -33,7 +33,8 @@ instance FromByteString ByteString where
     parser = takeByteString
 
 instance FromByteString Text where
-    parser = decodeUtf8 <$> takeByteString
+    parser = takeByteString
+         >>= either (const $ fail "invalid UTF8") return . decodeUtf8'
 
 instance FromByteString a => FromByteString [a] where
     parser = parseList
