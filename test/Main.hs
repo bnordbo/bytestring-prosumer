@@ -15,7 +15,10 @@ import           Test.Tasty.QuickCheck
 main = defaultMain tests
 
 tests :: TestTree
-tests = testGroup "Bijective"
+tests = testGroup "All tests" [ bijective, relaxedInput ]
+
+bijective :: TestTree
+bijective = testGroup "Bijective"
     [ testProperty "ByteString" $ \x ->
           fromByteString (toByteString x) == Just (x :: ByteString)
     , testProperty "Text" $ \x ->
@@ -52,6 +55,13 @@ tests = testGroup "Bijective"
           fromByteString (toByteString x) == Just (x :: Double)
     ]
 
+relaxedInput :: TestTree
+relaxedInput = testGroup "Relaxed input rules"
+    [ testProperty "Less case sensitive Bool input" $ \(BoolStr s) ->
+          fromByteString s == Just (if C.head s `elem` "tT" then True else False)
+    ]
+
+
 instance Arbitrary ByteString where
     arbitrary = C.pack <$> listOf (choose ('\0', '\255'))
 
@@ -70,3 +80,10 @@ instance IsString a => Arbitrary (UTF8 a) where
             , choose ( 57344,   65533 )
             , choose ( 65536, 1114111 )
             ]
+
+newtype BoolStr = BoolStr ByteString
+    deriving Show
+
+instance Arbitrary BoolStr where
+    arbitrary = BoolStr . C.pack <$>
+        elements [ "true", "True", "false", "False" ]

@@ -4,7 +4,7 @@
 
 module Data.ByteString.From (FromByteString(..), fromByteString) where
 
-import Control.Applicative              ((<$>), (<|>), optional)
+import Control.Applicative              ((<$>), (*>), (<|>), optional)
 import Data.Attoparsec.ByteString       (parse)
 import Data.Attoparsec.ByteString.Char8
 import Data.ByteString                  (ByteString)
@@ -39,9 +39,9 @@ instance FromByteString a => FromByteString [a] where
     parser = parseList
 
 instance FromByteString Bool where
-    parser = choice [ "True"  .*> return True
-                    , "False" .*> return False
-                    ]
+    parser = satisfy (`elem` "tT") *> "rue"  *> return True
+         <|> satisfy (`elem` "fF") *> "alse" *> return False
+         <|> fail "invalid Bool"
 
 instance FromByteString Integer where
     parser = signed decimal <|> fail "Invalid Integer"
