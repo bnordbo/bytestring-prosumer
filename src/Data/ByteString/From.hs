@@ -4,17 +4,17 @@
 
 module Data.ByteString.From (FromByteString(..), fromByteString) where
 
-import           Control.Applicative                     ((<$>), (<|>))
-import           Data.Attoparsec.ByteString              (parse)
-import           Data.Attoparsec.ByteString.Char8
-import           Data.ByteString                         (ByteString)
-import           Data.ByteString.Char8                   (empty, unpack)
-import           Data.Int
-import           Data.Text                               (Text)
-import           Data.Text.Encoding                      (decodeUtf8)
-import           Data.Word
-import           GHC.Float                               (double2Float)
-import           Prelude                          hiding (takeWhile)
+import Control.Applicative              ((<$>), (<|>), optional)
+import Data.Attoparsec.ByteString       (parse)
+import Data.Attoparsec.ByteString.Char8
+import Data.ByteString                  (ByteString)
+import Data.ByteString.Char8            (empty, unpack)
+import Data.Int
+import Data.Maybe                       (isJust)
+import Data.Text                        (Text)
+import Data.Text.Encoding               (decodeUtf8)
+import Data.Word
+import GHC.Float                        (double2Float)
 
 class FromByteString a where
     parser :: Parser a
@@ -32,11 +32,11 @@ runParser p b = case (feed (parse p b) empty) of
 instance FromByteString ByteString where
     parser = takeByteString
 
-instance FromByteString String where
-    parser = unpack <$> takeByteString
-
 instance FromByteString Text where
     parser = decodeUtf8 <$> takeByteString
+
+instance FromByteString a => FromByteString [a] where
+    parser = parseList
 
 instance FromByteString Bool where
     parser = choice [ "True"  .*> return True
@@ -81,3 +81,23 @@ instance FromByteString Float where
 
 instance FromByteString Double where
     parser = signed double <|> fail "Invalid Double"
+
+--- * Helpers
+
+parseList :: FromByteString a => Parser [a]
+parseList = atEnd >>= \e ->
+    if e then return []
+         else reverse <$> go []
+  where
+    go acc = do
+        x <- takeTill (== ',')
+        v <- case runParser parser x of
+                 Left e  -> fail e
+                 Right a -> return a
+        c <- optional (char ',')
+        e <- atEnd
+        case (e, isJust c) of
+            (True,  True)  -> fail "trailing comma"
+            (True,  False) -> return (v:acc)
+            (False, True)  -> go (v:acc)
+            (False, False) -> fail "missing comma"

@@ -18,10 +18,10 @@ tests :: TestTree
 tests = testGroup "Bijective"
     [ testProperty "ByteString" $ \x ->
           fromByteString (toByteString x) == Just (x :: ByteString)
-    , testProperty "String" $ \x ->
-          fromByteString (toByteString x) == Just (x :: String)
     , testProperty "Text" $ \x ->
           fromByteString (toByteString x) == Just (x :: Text)
+    , testProperty "[a]" $ \x ->
+          fromByteString (toByteString x) == Just (x :: [Bool])
     , testProperty "Bool" $ \x ->
           fromByteString (toByteString x) == Just (x :: Bool)
     , testProperty "Integer" $ \x ->
