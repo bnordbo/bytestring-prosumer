@@ -1,16 +1,19 @@
+{-# LANGUAGE FlexibleInstances #-}
+
 import           Control.Applicative
-import           Data.ByteString          (ByteString)
-import qualified Data.ByteString.Char8 as C
-import           Data.ByteString.From
-import           Data.ByteString.To
+import           Data.ByteString              (ByteString)
+import           Data.ByteString.Bijective
+import qualified Data.ByteString.Char8     as C
 import           Data.Char
 import           Data.Int
 import           Data.String
-import           Data.Text                (Text)
-import qualified Data.Text             as T
+import           Data.Text                     (Text)
+import qualified Data.Text                  as T
 import           Data.Word
+import           Test.QuickCheck               (Gen)
 import           Test.Tasty
 import           Test.Tasty.QuickCheck
+
 
 main = defaultMain tests
 
@@ -53,6 +56,8 @@ bijective = testGroup "Bijective"
           fromByteString (toByteString x) == Just (x :: Float)
     , testProperty "Double" $ \x ->
           fromByteString (toByteString x) == Just (x :: Double)
+    , testProperty "Hex" $ \x ->
+          fromByteString (toByteString x) == Just (x :: Hex Int)
     ]
 
 relaxedInput :: TestTree
@@ -60,7 +65,6 @@ relaxedInput = testGroup "Relaxed input rules"
     [ testProperty "Less case sensitive Bool input" $ \(BoolStr s) ->
           fromByteString s == Just (if C.head s `elem` "tT" then True else False)
     ]
-
 
 instance Arbitrary ByteString where
     arbitrary = C.pack <$> listOf (choose ('\0', '\255'))
@@ -88,3 +92,6 @@ newtype BoolStr = BoolStr ByteString
 instance Arbitrary BoolStr where
     arbitrary = BoolStr . C.pack <$>
         elements [ "true", "True", "false", "False" ]
+
+instance Arbitrary (Hex Int) where
+    arbitrary = Hex <$> suchThat arbitrary (>= 0)

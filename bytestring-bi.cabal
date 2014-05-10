@@ -11,8 +11,11 @@ build-type:          Simple
 cabal-version:       >= 1.10
 
 library
-    exposed-modules:     Data.ByteString.From
-                       , Data.ByteString.To
+    exposed-modules:     Data.ByteString.Bijective
+
+    other-modules:       Data.ByteString.Bijective.From
+                       , Data.ByteString.Bijective.To
+                       , Data.ByteString.Bijective.Hex
 
     build-depends:       base       == 4.*
                        , attoparsec == 0.11.*
@@ -32,6 +35,7 @@ test-suite bytestring-bi-unit
     build-depends:       base             == 4.*
                        , bytestring       == 0.10.4.*
                        , bytestring-bi
+                       , QuickCheck       == 2.7.*
                        , tasty            == 0.8.*
                        , tasty-quickcheck == 0.8.*
                        , text
