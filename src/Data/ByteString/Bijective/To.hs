@@ -1,7 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Data.ByteString.To (ToByteString(..)) where
+module Data.ByteString.Bijective.To (ToByteString(..)) where
 
 import           Data.ByteString            (ByteString)
 import qualified Data.ByteString.Lazy    as LB
@@ -14,6 +14,7 @@ import           Data.Text                  (Text)
 import qualified Data.Text.Encoding      as T
 import qualified Data.Text.Lazy          as LT
 import qualified Data.Text.Lazy.Encoding as LT
+
 
 class ToByteString a where
     toByteString :: a -> ByteString

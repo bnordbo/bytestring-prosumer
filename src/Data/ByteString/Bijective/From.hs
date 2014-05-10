@@ -2,7 +2,7 @@
 {-# LANGUAGE OverloadedStrings    #-}
 {-# LANGUAGE TypeSynonymInstances #-}
 
-module Data.ByteString.From (FromByteString(..), fromByteString) where
+module Data.ByteString.Bijective.From (FromByteString(..), fromByteString) where
 
 import Control.Applicative              ((<$>), (*>), (<|>), optional)
 import Data.Attoparsec.ByteString       (parse)
@@ -15,6 +15,7 @@ import Data.Text                        (Text)
 import Data.Text.Encoding               (decodeUtf8')
 import Data.Word
 import GHC.Float                        (double2Float)
+
 
 class FromByteString a where
     parser :: Parser a
