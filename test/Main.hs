@@ -63,7 +63,7 @@ prosumer = testGroup "Prosumer"
 relaxedInput :: TestTree
 relaxedInput = testGroup "Relaxed input rules"
     [ testProperty "Less case sensitive Bool input" $ \(BoolStr s) ->
-          fromByteString s == Just (if C.head s `elem` "tT" then True else False)
+          fromByteString s == Just (C.head s `elem` "tT")
     ]
 
 instance Arbitrary ByteString where

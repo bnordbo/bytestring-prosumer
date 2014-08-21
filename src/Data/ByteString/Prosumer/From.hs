@@ -24,7 +24,7 @@ fromByteString :: FromByteString a => ByteString -> Maybe a
 fromByteString = either (const Nothing) Just . runParser parser
 
 runParser :: Parser a -> ByteString -> Either String a
-runParser p b = case (feed (parse p b) empty) of
+runParser p b = case feed (parse p b) empty of
     Done "" r  -> Right r
     Done t r   -> Left $ "Trailing input: " ++ show t
     Fail t _ e -> Left $ "Parsing failed before '" ++ show t ++ "': " ++ e
