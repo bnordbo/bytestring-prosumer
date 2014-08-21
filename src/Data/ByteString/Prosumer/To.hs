@@ -1,7 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Data.ByteString.Bijective.To (ToByteString(..)) where
+module Data.ByteString.Prosumer.To (ToByteString(..)) where
 
 import           Data.ByteString            (ByteString)
 import qualified Data.ByteString.Lazy    as LB

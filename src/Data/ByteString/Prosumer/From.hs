@@ -2,7 +2,7 @@
 {-# LANGUAGE OverloadedStrings    #-}
 {-# LANGUAGE TypeSynonymInstances #-}
 
-module Data.ByteString.Bijective.From (FromByteString(..), fromByteString) where
+module Data.ByteString.Prosumer.From (FromByteString(..), fromByteString) where
 
 import Control.Applicative              ((<$>), (*>), (<|>), optional)
 import Data.Attoparsec.ByteString       (parse)

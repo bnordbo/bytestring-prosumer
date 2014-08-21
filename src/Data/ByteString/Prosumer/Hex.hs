@@ -1,15 +1,15 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings          #-}
 
-module Data.ByteString.Bijective.Hex (Hex(..)) where
+module Data.ByteString.Prosumer.Hex (Hex(..)) where
 
 import Control.Applicative
 import Data.Attoparsec.ByteString       (parse)
 import Data.Attoparsec.ByteString.Char8
 import Data.Bits                        (Bits)
-import Data.ByteString.Bijective.From   (FromByteString(..))
 import Data.ByteString.Char8            (pack)
-import Data.ByteString.Bijective.To     (ToByteString(..))
+import Data.ByteString.Prosumer.From    (FromByteString(..))
+import Data.ByteString.Prosumer.To      (ToByteString(..))
 import Numeric                          (showHex)
 import Text.Printf                      (PrintfArg)
 

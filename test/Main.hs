@@ -2,7 +2,7 @@
 
 import           Control.Applicative
 import           Data.ByteString              (ByteString)
-import           Data.ByteString.Bijective
+import           Data.ByteString.Prosumer
 import qualified Data.ByteString.Char8     as C
 import           Data.Char
 import           Data.Int
@@ -18,10 +18,10 @@ import           Test.Tasty.QuickCheck
 main = defaultMain tests
 
 tests :: TestTree
-tests = testGroup "All tests" [ bijective, relaxedInput ]
+tests = testGroup "All tests" [ prosumer, relaxedInput ]
 
-bijective :: TestTree
-bijective = testGroup "Bijective"
+prosumer :: TestTree
+prosumer = testGroup "Prosumer"
     [ testProperty "ByteString" $ \x ->
           fromByteString (toByteString x) == Just (x :: ByteString)
     , testProperty "Text" $ \x ->

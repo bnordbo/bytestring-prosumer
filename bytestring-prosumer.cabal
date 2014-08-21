@@ -1,7 +1,7 @@
-name:                bytestring-bi
+name:                bytestring-prosumer
 version:             0.1.0.0
 synopsis:            A type-class to convert to ByteString values and back
-homepage:            https://github.com/bnordbo/bytestring-bi
+homepage:            https://github.com/bnordbo/bytestring-prosumer
 license:             MPL-2.0
 license-file:        LICENSE
 author:              Bjørn Nordbø
@@ -11,11 +11,11 @@ build-type:          Simple
 cabal-version:       >= 1.10
 
 library
-    exposed-modules:     Data.ByteString.Bijective
+    exposed-modules:     Data.ByteString.Prosumer
 
-    other-modules:       Data.ByteString.Bijective.From
-                       , Data.ByteString.Bijective.To
-                       , Data.ByteString.Bijective.Hex
+    other-modules:       Data.ByteString.Prosumer.From
+                       , Data.ByteString.Prosumer.To
+                       , Data.ByteString.Prosumer.Hex
 
     build-depends:       base       == 4.*
                        , attoparsec == 0.11.*
@@ -26,16 +26,16 @@ library
     hs-source-dirs:      src
     default-language:    Haskell2010
 
-test-suite bytestring-bi-unit
+test-suite bytestring-prosumer-unit
     type:                exitcode-stdio-1.0
     default-language:    Haskell2010
     main-is:             Main.hs
     hs-source-dirs:      test
 
-    build-depends:       base             == 4.*
-                       , bytestring       == 0.10.4.*
-                       , bytestring-bi
-                       , QuickCheck       == 2.7.*
-                       , tasty            == 0.8.*
-                       , tasty-quickcheck == 0.8.*
+    build-depends:       base                == 4.*
+                       , bytestring          == 0.10.4.*
+                       , bytestring-prosumer
+                       , QuickCheck          == 2.7.*
+                       , tasty               == 0.8.*
+                       , tasty-quickcheck    == 0.8.*
                        , text
