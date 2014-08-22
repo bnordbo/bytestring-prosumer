@@ -1,3 +1,7 @@
+-- This Source Code Form is subject to the terms of the Mozilla Public
+-- License, v. 2.0. If a copy of the MPL was not distributed with this
+-- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
 
@@ -16,8 +20,12 @@ import qualified Data.Text.Lazy          as LT
 import qualified Data.Text.Lazy.Encoding as LT
 
 
+-- | Produce 'ByteString's
 class ToByteString a where
     toByteString :: a -> ByteString
+
+-----------------------------------------------------------------------------
+-- Instances
 
 instance ToByteString ByteString where
     toByteString = id
@@ -77,7 +85,9 @@ instance ToByteString Float where
 instance ToByteString Double where
     toByteString = buildByteString . Build.doubleDec
 
---- * Utility functions
+
+-----------------------------------------------------------------------------
+-- Utility functions
 
 buildByteString :: Builder -> ByteString
 buildByteString = LB.toStrict . Build.toLazyByteString
