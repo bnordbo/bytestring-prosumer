@@ -1,5 +1,5 @@
 name:                bytestring-prosumer
-version:             0.1.0.0
+version:             0.1
 synopsis:            A type-class to convert to ByteString values and back
 homepage:            https://github.com/bnordbo/bytestring-prosumer
 license:             OtherLicense
@@ -18,9 +18,8 @@ library
                        , Data.ByteString.Prosumer.Hex
 
     build-depends:       base       == 4.*
-                       , attoparsec == 0.11.*
+                       , attoparsec == 0.12.*
                        , bytestring == 0.10.*
-                       , errors     == 1.4.*
                        , text
 
     hs-source-dirs:      src
